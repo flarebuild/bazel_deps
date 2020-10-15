@@ -1,0 +1,4 @@
+rule: boringssl
+default_args:
+  version: 142bbed2ba0e8266582eaf32c69f89e5ea92b519
+  sha256: d731dd0e2f68d99f74e45e57714c13680cdceae80a4f4c9488f5e970cbd117cd

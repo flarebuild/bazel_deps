@@ -1,0 +1,11 @@
+rule: folly
+default_args:
+  version: 9d715f1f0f683baa25706ed0c442aababf59275d
+  sha256: 6de7c84f86931a70c20e2216ef0df56152404965b0e96b45061392e5cda66f04
+deps:
+  - net/zlib
+  - org/boost
+  - org/libevent
+  - com/github/google/boringssl
+  - com/github/google/double_conversion
+  - com/github/google/glog

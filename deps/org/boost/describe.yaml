@@ -1,0 +1,12 @@
+rule: boost
+default_args:
+  rules_boost_version: 2613d04ab3d22dfc4543ea0a083d9adeaa0daf09
+  rules_boost_sha256: 512f913240e026099d4ca4a98b1ce8048c99de77fdc8e8584e9e2539ee119ca2
+  boost_version: 1.71.0
+  boost_sha256: d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee
+deps:
+  - net/zlib
+  - org/bzip
+  - org/lzma
+  - com/github/facebook/zstd
+  - com/github/google/boringssl

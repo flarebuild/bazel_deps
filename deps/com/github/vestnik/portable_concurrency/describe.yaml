@@ -1,0 +1,4 @@
+rule: portable_concurrency
+default_args:
+  version: 0fde6bcb7246072e2e9faf3635bc5a4aa96de88c
+  sha256: 7ac64ae904293dd13618b9e4d79107b081aa05e524bf8ba14898a02c67b84308

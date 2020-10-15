@@ -1,0 +1,8 @@
+workspace(name = "build_flare_bazel_deps")
+
+# com_flarebuild_bazel_utility
+
+local_repository(
+    name = "build_flare_bazel_utility",
+    path = "../bazel_utility/",
+)

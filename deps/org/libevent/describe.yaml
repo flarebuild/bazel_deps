@@ -1,0 +1,4 @@
+rule: libevent
+default_args:
+  version: release-2.1.10-stable
+  sha256: 6353444dc9c34086a71cef7f63f4309b39df937c5da233deca290f02ccaf46a9

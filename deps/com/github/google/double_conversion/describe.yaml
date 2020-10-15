@@ -1,0 +1,4 @@
+rule: double_conversion
+default_args:
+  version: 3.1.5
+  sha256: 72c0e3925a1214095afc6f1c214faecbec20e8526cf6b8a541cf72195a11887f
