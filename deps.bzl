@@ -6,20 +6,24 @@ def _load_dep_info(repository_ctx, dep):
     name = paths.basename(dep)
     dir = "//deps/" + dep + ":"
     return struct(
+        name = dep.replace("/", "_"),
         path = dir + name + ".bzl",
         describe = load_yaml(repository_ctx.read(Label(dir + "describe.yaml")))
     )
 
-def _init_pattern(name, describe):
+def _init_pattern(name, describe, mappings):
     args = { "name": name }
     if "default_args" in describe:
         args.update(describe["default_args"])
+    if "pass_mappings" in describe and describe["pass_mappings"]:
+        args.update({ "repo_mapping": mappings })
 
     return f.format_call(describe["rule"], args)
 
 def _compose_deps_impl(repository_ctx):
     to_compose = load_yaml(repository_ctx.read(repository_ctx.attr.config))
     loaded = {}
+    mappings = {}
 
     for _ in range(repository_ctx.attr.depth):
         cur_deps = to_compose
@@ -27,6 +31,10 @@ def _compose_deps_impl(repository_ctx):
         for dep in cur_deps:
             info = _load_dep_info(repository_ctx, dep)
             loaded[dep] = info
+            if "mappings" in info.describe:
+                for mapping in info.describe["mappings"]:
+                    mappings["@" + mapping] = "@" + info.name
+
             if "deps" in info.describe:
                 for transitive_dep in info.describe["deps"]:
                     if transitive_dep not in loaded:
@@ -37,15 +45,15 @@ def _compose_deps_impl(repository_ctx):
     if len(to_compose):
         fail("not enough depth to compose transitive deps, plz increase it, current: %s" + repository_ctx.attr.depth )
 
-
     loads = []
     inits = []
 
-    for dep, info in loaded.items():
+    for _, info in loaded.items():
         loads.append("load(\"@build_flare_bazel_deps%s\", \"%s\")" % (info.path, info.describe["rule"])) 
         inits.append(f.add_indent(_init_pattern(
-            dep.replace("/", "_"),
+            info.name,
             info.describe,
+            mappings
         ), 1))
 
     repository_ctx.file("BUILD.bazel", "")

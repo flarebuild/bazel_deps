@@ -1,0 +1,4 @@
+rule: rules_swift
+default_args:
+  version: 0.14.0
+  sha256: cea22c0616d797e494d7844a9b604520c87f53c81de49613a7e679ec5b821620

@@ -1,0 +1,4 @@
+rule: fmt
+default_args:
+  version: df4bd60f42f549679b14f3624838b249219afdd9
+  sha256: e1b661682264a7601c4d68b4b428859a843a40e4fabbb32b01c79c650a5da3be

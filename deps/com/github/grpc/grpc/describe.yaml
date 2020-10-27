@@ -1,0 +1,11 @@
+rule: grpc
+default_args:
+  version: 1.27.3
+  sha256: bad0de89c09137704821818f5d25566ee4c58698e99e3df67e878ef5da221159
+deps:
+  - com/github/google/boringssl
+  - com/google/protobuf
+  - com/github/protocolbuffers/upb
+  - build/bazel/rules_cc
+  - build/bazel/rules_apple
+  - build/bazel/rules_python

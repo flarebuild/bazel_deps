@@ -8,13 +8,18 @@ def boost(name, rules_boost_version, rules_boost_sha256, boost_version, boost_sh
         urls = [ "https://github.com/nelhage/rules_boost/archive/%s.tar.gz" % rules_boost_version, ],
         repo_mapping = { 
             "@boost": "@org_boost",
-        }
+        },
+        patches = [
+            "@build_flare_bazel_deps//deps/org/boost:no_breakthrough.patch",
+        ],
     )
     boost_ver_underscored = boost_version.replace(".", "_")
     http_archive(
         name = name,
         build_file = "@com_github_nelhage_rules_boost//:BUILD.boost",
-        patch_cmds = ["rm -f doc/pdf/BUILD"],
+        patch_cmds = [
+            "rm -f doc/pdf/BUILD",
+        ],
         sha256 = boost_sha256,
         strip_prefix = "boost_%s" % boost_ver_underscored,
         urls = [ x % (boost_version, boost_ver_underscored) for x in [

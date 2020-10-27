@@ -1,8 +1,11 @@
 workspace(name = "build_flare_bazel_deps")
 
-# com_flarebuild_bazel_utility
-
-local_repository(
+# build_flare_bazel_utility
+http_archive(
     name = "build_flare_bazel_utility",
-    path = "../bazel_utility/",
+    strip_prefix = "bazel_utility-master",
+    urls = ["https://github.com/flarebuild/bazel_utility/archive/master.tar.gz"],
 )
+
+load("@build_flare_bazel_utility//:init_me.bzl", "init_me")
+init_me()

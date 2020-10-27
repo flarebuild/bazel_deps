@@ -1,0 +1,4 @@
+rule: sodium
+default_args:
+  version: 1.0.18
+  sha256: 1b72c0cdbc535ce42e14ac15e8fc7c089a3ee9ffe5183399fd77f0f3746ea794

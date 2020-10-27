@@ -1,0 +1,7 @@
+rule: rules_apple
+default_args:
+  version: 0.20.0
+  sha256: 9a0c7239ec0b74f7c3a7012bb12c23ca205c4e45b0606a951cfa5b497b68757e
+deps:
+  - build/bazel/apple_support
+  - build/bazel/rules_swift

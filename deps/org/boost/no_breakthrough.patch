@@ -1,0 +1,10 @@
+--- BUILD.boost
++++ BUILD.boost
+@@ -1520,7 +1520,6 @@ boost_library(
+         "boost/cregex.hpp",
+     ],
+     defines = [
+-        "BOOST_FALLTHROUGH",
+     ],
+     deps = [
+         ":assert",

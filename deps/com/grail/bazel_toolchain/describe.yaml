@@ -1,0 +1,6 @@
+rule: bazel_toolchain
+default_args:
+  version: f2d1ba2c9d713b2aa6e7063f6d11dd3d64aa402a
+  sha256: 6bf2b30c8ab190eee44e1843f0cff457a5379250ad8239155dcf5bd38e4cc70f
+deps:
+  - build/bazel/rules_cc

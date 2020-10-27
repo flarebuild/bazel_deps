@@ -1,0 +1,4 @@
+rule: gflags
+default_args:
+  version: 28f50e0fed19872e0fd50dd23ce2ee8cd759338e
+  sha256: 63ae70ea3e05780f7547d03503a53de3a7d2d83ad1caaa443a31cb20aea28654

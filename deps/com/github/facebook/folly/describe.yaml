@@ -1,7 +1,7 @@
 rule: folly
 default_args:
-  version: 9d715f1f0f683baa25706ed0c442aababf59275d
-  sha256: 6de7c84f86931a70c20e2216ef0df56152404965b0e96b45061392e5cda66f04
+  version: de5c908bbc07e432ccec1550e76d2ccf0d31d4a3
+  sha256: 7472455bc8ad005b929cc66e339ffed7e628a0bf4faa0972ed220a03e5ec0e77
 deps:
   - net/zlib
   - org/boost
@@ -9,3 +9,6 @@ deps:
   - com/github/google/boringssl
   - com/github/google/double_conversion
   - com/github/google/glog
+  - com/github/fmtlib/fmt
+  - com/github/jedisct1/sodium
+  - com/github/facebook/zstd

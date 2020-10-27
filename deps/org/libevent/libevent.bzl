@@ -522,7 +522,7 @@ cc_library(
         "include/**/*.h",
     ]),
     deps = [
-        "@boringssl//:ssl",
+        "@com_github_google_boringssl//:ssl",
     ],
     visibility = ["//visibility:public"],
 )
