@@ -12,6 +12,7 @@ def grpc(name, version, sha256):
             "@rules_python": "@build_bazel_rules_python",
             "@upb": "@com_github_protocolbuffers_upb",
             "@zlib": "@net_zlib",
+            "@com_google_absl": "@com_github_abseil_abseil_cpp",
         },
     )
     native.bind(
@@ -21,4 +22,24 @@ def grpc(name, version, sha256):
     native.bind(
         name = "protobuf_headers",
         actual = "@com_google_protobuf//:protobuf_headers",
+    )
+    native.bind(
+        name = "upb_lib",
+        actual = "@com_github_protocolbuffers_upb//:upb",
+    )
+    native.bind(
+        name = "libssl",
+        actual = "@com_github_google_boringssl//:ssl",
+    )
+    native.bind(
+        name = "madler_zlib",
+        actual = "@net_zlib//:zlib",
+    )
+    native.bind(
+        name = "cares",
+        actual = "@com_github_cares_cares//:ares",
+    )
+    native.bind(
+        name = "re2",
+        actual = "@com_github_google_re2//:re2",
     )

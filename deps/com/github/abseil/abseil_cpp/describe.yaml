@@ -1,0 +1,4 @@
+rule: abseil_cpp
+default_args:
+  version: 962b067540f511070b7afa4cda465233b42b560a
+  sha256: bfadb40011195166ac1cbf7177f8269cbd8f1fdb60fea7440e86c0318f70a9c3

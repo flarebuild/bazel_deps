@@ -1,11 +1,14 @@
 rule: grpc
 default_args:
-  version: 1.27.3
-  sha256: bad0de89c09137704821818f5d25566ee4c58698e99e3df67e878ef5da221159
+  version: 1.33.2
+  sha256: 43feda4d7ce2892400d5a0cbccecc5b1790f3253244a171360018d84c2949fb7
 deps:
   - com/github/google/boringssl
   - com/google/protobuf
   - com/github/protocolbuffers/upb
+  - com/github/abseil/abseil_cpp
+  - com/github/cares/cares
+  - com/github/google/re2
   - build/bazel/rules_cc
   - build/bazel/rules_apple
   - build/bazel/rules_python

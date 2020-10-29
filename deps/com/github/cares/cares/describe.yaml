@@ -1,0 +1,4 @@
+rule: cares
+default_args:
+  version: e982924acee7f7313b4baa4ee5ec000c5e373c30
+  sha256: e8c2751ddc70fed9dc6f999acd92e232d5846f009ee1674f8aee81f19b2b915a
