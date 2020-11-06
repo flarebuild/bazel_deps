@@ -1,0 +1,6 @@
+rule: flatbuffers
+default_args:
+  version: 1.12.0
+  sha256: 4b8b21adbfe8a74b90604161afcf87c125a26b86c99327e7a04525080606536c
+deps:
+  - build/bazel/rules_cc

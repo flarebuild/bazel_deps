@@ -15,6 +15,7 @@ def grpc(name, version, sha256):
             "@com_google_absl": "@com_github_abseil_abseil_cpp",
         },
     )
+
     native.bind(
         name = "protobuf_clib",
         actual = "@com_google_protobuf//:protoc_lib",
@@ -23,6 +24,12 @@ def grpc(name, version, sha256):
         name = "protobuf_headers",
         actual = "@com_google_protobuf//:protobuf_headers",
     )
+
+    native.bind(
+        name = "protocol_compiler",
+        actual = "@com_google_protobuf//:protoc",
+    )
+
     native.bind(
         name = "upb_lib",
         actual = "@com_github_protocolbuffers_upb//:upb",

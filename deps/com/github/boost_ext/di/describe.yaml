@@ -1,0 +1,4 @@
+rule: di
+default_args:
+  version: 1.2.0
+  sha256: c3d0cddc478b0138be5cf46eaf00d3610fb36a1bd23fda2d79f296c83f2d22ba
