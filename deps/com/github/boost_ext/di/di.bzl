@@ -13,6 +13,9 @@ cc_library(
         "include/boost/**/*.hpp",
         "extension/include/boost/**/*.hpp",
     ]),
+    copts = [
+        "-Wno-return-stack-address",
+    ],
     visibility = ["//visibility:public"],
 )
 """
