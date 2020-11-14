@@ -1,7 +1,7 @@
 rule: protobuf
 default_args:
-  version: 3.13.0.1
-  sha256: f25dbda80787cb5494ace9fe16b3d380a43592e97d5fed31547ef8d331c5253d
+  version: 4.0.0-rc2
+  sha256: 0075c64cef80524b1d855df5f405845ded9b8d055022cc17b94e1589eb946b90
 deps:
   - build/bazel/rules_cc
   - build/bazel/rules_python

@@ -50,15 +50,6 @@ CONFIG_H_CONTENT = """
 /* Define to 1 if you have the `accept4' function. */
 /* #undef EVENT__HAVE_ACCEPT4 */
 
-/* Define to 1 if you have the `arc4random' function. */
-#define EVENT__HAVE_ARC4RANDOM 1
-
-/* Define to 1 if you have the `arc4random_buf' function. */
-#define EVENT__HAVE_ARC4RANDOM_BUF 1
-
-/* Define to 1 if you have the `arc4random_addrandom' function. */
-#define EVENT__HAVE_ARC4RANDOM_ADDRANDOM 1
-
 /* Define if clock_gettime is available in libc */
 #define EVENT__DNS_USE_CPU_CLOCK_FOR_ID 1
 
@@ -98,21 +89,6 @@ CONFIG_H_CONTENT = """
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define EVENT__HAVE_DLFCN_H 1
-
-/* Define if your system supports the epoll system calls */
-/* #undef EVENT__HAVE_EPOLL */
-
-/* Define to 1 if you have the `epoll_create1' function. */
-/* #undef EVENT__HAVE_EPOLL_CREATE1 */
-
-/* Define to 1 if you have the `epoll_ctl' function. */
-/* #undef EVENT__HAVE_EPOLL_CTL */
-
-/* Define to 1 if you have the `eventfd' function. */
-/* #undef EVENT__HAVE_EVENTFD */
-
-/* Define if your system supports event ports */
-/* #undef EVENT__HAVE_EVENT_PORTS */
 
 /* Define to 1 if you have the `fcntl' function. */
 #define EVENT__HAVE_FCNTL 1
@@ -169,20 +145,24 @@ CONFIG_H_CONTENT = """
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define EVENT__HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the `issetugid' function. */
-#define EVENT__HAVE_ISSETUGID 1
-
-/* Define to 1 if you have the `kqueue' function. */
-#define EVENT__HAVE_KQUEUE 1
-
 /* Define if the system has zlib */
 #define EVENT__HAVE_LIBZ 1
 
-/* Define to 1 if you have the `mach_absolute_time' function. */
-#define EVENT__HAVE_MACH_ABSOLUTE_TIME 1
-
 /* Define to 1 if you have the <mach/mach_time.h> header file. */
+#ifdef __APPLE__
+#define EVENT__HAVE_KQUEUE 1
+#define EVENT__HAVE_WORKING_KQUEUE 1
 #define EVENT__HAVE_MACH_MACH_TIME_H 1
+#define EVENT__HAVE_STRLCPY 1
+#define EVENT__HAVE_ISSETUGID 1
+#define EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN 1
+#define EVENT__HAVE_SYS_SYSCTL_H 1
+#else 
+#define EVENT__HAVE_EPOLL 1
+#define EVENT__HAVE_EPOLL_CREATE1 1
+#define EVENT__HAVE_EPOLL_CTL 1
+#define EVENT__HAVE_EVENTFD 1
+#endif
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define EVENT__HAVE_MEMORY_H 1
@@ -283,9 +263,6 @@ CONFIG_H_CONTENT = """
 /* Define to 1 if you have the <string.h> header file. */
 #define EVENT__HAVE_STRING_H 1
 
-/* Define to 1 if you have the `strlcpy' function. */
-#define EVENT__HAVE_STRLCPY 1
-
 /* Define to 1 if you have the `strsep' function. */
 #define EVENT__HAVE_STRSEP 1
 
@@ -310,8 +287,6 @@ CONFIG_H_CONTENT = """
 /* Define to 1 if the system has the type `struct sockaddr_in6'. */
 #define EVENT__HAVE_STRUCT_SOCKADDR_IN6 1
 
-/* Define to 1 if `sin6_len' is member of `struct sockaddr_in6'. */
-#define EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN 1
 
 /* Define to 1 if `sin_len' is member of `struct sockaddr_in'. */
 /* #undef EVENT__HAVE_STRUCT_SOCKADDR_IN_SIN_LEN */
@@ -370,8 +345,6 @@ CONFIG_H_CONTENT = """
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define EVENT__HAVE_SYS_STAT_H 1
 
-/* Define to 1 if you have the <sys/sysctl.h> header file. */
-#define EVENT__HAVE_SYS_SYSCTL_H 1
 
 /* Define to 1 if you have the <sys/timerfd.h> header file. */
 /* #undef EVENT__HAVE_SYS_TIMERFD_H */
@@ -436,9 +409,6 @@ CONFIG_H_CONTENT = """
 
 /* Define to 1 if you have the `vasprintf' function. */
 #define EVENT__HAVE_VASPRINTF 1
-
-/* Define if kqueue works correctly with pipes */
-#define EVENT__HAVE_WORKING_KQUEUE 1
 
 #ifdef __USE_UNUSED_DEFINITIONS__
 /* Define to necessary symbol if this constant uses a non-standard name on your system. */
@@ -511,10 +481,32 @@ CONFIG_H_CONTENT = """
 """
 
 BUILD_CONTENT = """
+
+_WIN_SRCS = [
+    "buffer_iocp.c",
+    "bufferevent_async.c",
+    "event_iocp.c",
+    "win32select.c",
+    "evthread_win32.c",
+]
+
+_TEXTUAL_HDRS = [
+    "arc4random.c",
+]
+
 cc_library(
     name = "libevent",
     srcs = glob([
-    ]),
+        "*.c",
+        "*.h",
+    ], exclude = _WIN_SRCS + _TEXTUAL_HDRS) + select({
+        "@bazel_tools//platforms:linux": [],
+        "@bazel_tools//platforms:osx": [],
+        "@bazel_tools//platforms:windows": _WIN_SRCS,
+    }),
+    textual_hdrs = [
+        "arc4random.c",
+    ],
     includes = [
         "include",
     ],
@@ -526,6 +518,66 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
 )
+"""
+
+_EVCONF_PRIVATE_H_CONTENT = """
+/* evconfig-private.h template - see "Configuration Header Templates" */
+/* in AC manual.  Kevin Bowling <kevin.bowling@kev009.com */
+#ifndef EVCONFIG_PRIVATE_H_INCLUDED_
+#define EVCONFIG_PRIVATE_H_INCLUDED_
+
+/* Enable extensions on AIX 3, Interix.  */
+#ifndef _ALL_SOURCE
+# undef _ALL_SOURCE
+#endif
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
+/* Enable threading extensions on Solaris.  */
+#ifndef _POSIX_PTHREAD_SEMANTICS
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif
+/* Enable extensions on HP NonStop.  */
+#ifndef _TANDEM_SOURCE
+# undef _TANDEM_SOURCE
+#endif
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# undef __EXTENSIONS__
+#endif
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+#undef _FILE_OFFSET_BITS
+/* Define for large files, on AIX-style hosts. */
+#undef _LARGE_FILES
+
+/* Define to 1 if on MINIX. */
+#ifndef _MINIX
+#undef _MINIX
+#endif
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+#ifndef _POSIX_1_SOURCE
+#undef _POSIX_1_SOURCE
+#endif
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+#ifndef _POSIX_SOURCE
+#undef _POSIX_SOURCE
+#endif
+
+/* Enable POSIX.2 extensions on QNX for getopt */
+#ifdef __QNX__
+# ifndef __EXT_POSIX2
+#  define __EXT_POSIX2
+# endif
+#endif
+
+#include <stdint.h>
+
+#endif
 """
 
 def _libevent_impl(repository_ctx):
@@ -544,6 +596,10 @@ def _libevent_impl(repository_ctx):
     repository_ctx.file(
         "include/event2/event-config.h",
         content = CONFIG_H_CONTENT
+    )
+    repository_ctx.file(
+        "evconfig-private.h",
+        content = _EVCONF_PRIVATE_H_CONTENT
     )
 
 _libevent = repository_rule(
