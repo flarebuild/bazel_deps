@@ -495,6 +495,14 @@ _LINUX_SRCS = [
     "epoll_sub.c",
 ]
 
+_LINUX_HDRS = [
+    "compat/sys/queue.h",
+]
+
+_LINUX_INCLUDES = [
+    "compat",
+]
+
 _TEXTUAL_HDRS = [
     "arc4random.c",
 ]
@@ -504,6 +512,7 @@ cc_library(
     srcs = glob([
         "*.c",
         "*.h",
+        "compat/**/*h",
     ], exclude = _WIN_SRCS + _LINUX_SRCS + _TEXTUAL_HDRS) + select({
         "@bazel_tools//platforms:linux": _LINUX_SRCS,
         "@bazel_tools//platforms:osx": [],
@@ -514,10 +523,18 @@ cc_library(
     ],
     includes = [
         "include",
-    ],
+    ] + select({
+        "@bazel_tools//platforms:linux": _LINUX_INCLUDES,
+        "@bazel_tools//platforms:osx": [],
+        "@bazel_tools//platforms:windows": [],
+    }),
     hdrs = glob([
         "include/**/*.h",
-    ]),
+    ]) + select({
+        "@bazel_tools//platforms:linux": _LINUX_HDRS,
+        "@bazel_tools//platforms:osx": [],
+        "@bazel_tools//platforms:windows": [],
+    }),
     deps = [
         "@com_github_google_boringssl//:ssl",
     ],
