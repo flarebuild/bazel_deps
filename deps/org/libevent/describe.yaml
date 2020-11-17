@@ -1,6 +1,6 @@
 rule: libevent
 default_args:
-  version: release-2.1.10-stable
-  sha256: 6353444dc9c34086a71cef7f63f4309b39df937c5da233deca290f02ccaf46a9
+  version: release-2.1.12-stable
+  sha256: 8836ad722ab211de41cb82fe098911986604f6286f67d10dfb2b6787bf418f49
 deps:
   - com/github/google/boringssl

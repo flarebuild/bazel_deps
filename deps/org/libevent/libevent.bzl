@@ -157,6 +157,7 @@ CONFIG_H_CONTENT = """
 #define EVENT__HAVE_ISSETUGID 1
 #define EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN 1
 #define EVENT__HAVE_SYS_SYSCTL_H 1
+#define EVENT__HAVE_ARC4RANDOM 1
 #else 
 #define EVENT__HAVE_EPOLL 1
 #define EVENT__HAVE_EPOLL_CREATE1 1
@@ -490,6 +491,10 @@ _WIN_SRCS = [
     "evthread_win32.c",
 ]
 
+_LINUX_SRCS = [
+    "epoll_sub.c",
+]
+
 _TEXTUAL_HDRS = [
     "arc4random.c",
 ]
@@ -499,8 +504,8 @@ cc_library(
     srcs = glob([
         "*.c",
         "*.h",
-    ], exclude = _WIN_SRCS + _TEXTUAL_HDRS) + select({
-        "@bazel_tools//platforms:linux": [],
+    ], exclude = _WIN_SRCS + _LINUX_SRCS + _TEXTUAL_HDRS) + select({
+        "@bazel_tools//platforms:linux": _LINUX_SRCS,
         "@bazel_tools//platforms:osx": [],
         "@bazel_tools//platforms:windows": _WIN_SRCS,
     }),
