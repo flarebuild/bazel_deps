@@ -1,11 +1,56 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+_PATCH = """
+--- src/core/tsi/alts/crypt/gsec.h
++++ src/core/tsi/alts/crypt/gsec.h
+@@ -27,10 +27,14 @@
+
+ #include <grpc/grpc.h>
+
++#ifdef FLARE_MUSL
++#include <fcntl.h>
++#else
+ struct iovec {
+   void* iov_base;
+   size_t iov_len;
+ };
++#endif
+
+ /**
+  * A gsec interface for AEAD encryption schemes. The API is thread-compatible.
+"""
+
+def _grpc_impl(repository_ctx):
+    version = repository_ctx.attr.version
+    sha256 = repository_ctx.attr.sha256
+    repository_ctx.download_and_extract(
+        "https://github.com/grpc/grpc/archive/v%s.zip" % version,
+        output = ".",
+        sha256 = sha256,
+        type = "zip",
+        stripPrefix = "grpc-%s" % version,
+    )
+    if repository_ctx.os.name.lower().startswith("linux"):
+        repository_ctx.file(
+            "grpc_patch.diff",
+            _PATCH,
+        )
+        repository_ctx.patch("grpc_patch.diff")
+
+_grpc = repository_rule(
+    implementation = _grpc_impl,
+    local = True,
+    attrs = {
+        "version": attr.string(mandatory=True),
+        "sha256": attr.string(mandatory=True),
+    },
+)
+
 def grpc(name, version, sha256):
-    http_archive(
+    _grpc(
         name = name,
         sha256 = sha256,
-        strip_prefix = "grpc-%s" % version,
-        urls = ["https://github.com/grpc/grpc/archive/v%s.zip" % version],
+        version = version,
         repo_mapping = {
             "@boringssl": "@com_github_google_boringssl",
             "@rules_cc": "@build_bazel_rules_cc",

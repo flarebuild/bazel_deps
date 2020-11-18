@@ -492,7 +492,6 @@ _WIN_SRCS = [
 ]
 
 _LINUX_SRCS = [
-    "epoll_sub.c",
 ]
 
 _LINUX_HDRS = [
@@ -513,14 +512,12 @@ cc_library(
         "*.c",
         "*.h",
         "compat/**/*h",
-    ], exclude = _WIN_SRCS + _LINUX_SRCS + _TEXTUAL_HDRS) + select({
+    ], exclude = [ "epoll_sub.c",] + _WIN_SRCS + _LINUX_SRCS + _TEXTUAL_HDRS) + select({
         "@bazel_tools//platforms:linux": _LINUX_SRCS,
         "@bazel_tools//platforms:osx": [],
         "@bazel_tools//platforms:windows": _WIN_SRCS,
     }),
-    textual_hdrs = [
-        "arc4random.c",
-    ],
+    textual_hdrs = _TEXTUAL_HDRS,
     includes = [
         "include",
     ] + select({
