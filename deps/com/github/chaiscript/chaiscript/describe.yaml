@@ -1,0 +1,4 @@
+rule: chaiscript
+default_args:
+  version: 6.1.0
+  sha256: 12e2fdc5bbf20c0a79953304055e5d84cd668b911d25b6abf10ef09fffd9adcc

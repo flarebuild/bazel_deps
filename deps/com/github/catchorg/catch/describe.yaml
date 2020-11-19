@@ -1,0 +1,6 @@
+rule: catch
+default_args:
+  version: 3.0.0-preview3
+  sha256: d81bb2732485074649087ca4f3ceb80fed6900dad2885115baa0ba1fd465b0d3
+deps:
+  - build/bazel/rules_cc
