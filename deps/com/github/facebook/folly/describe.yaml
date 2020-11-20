@@ -1,7 +1,7 @@
 rule: folly
 default_args:
-  version: 4ba7e82f3f2ab2f8245e094dea48673ece28125f
-  sha256: c6de60320e664d07756a5e3c0c404891063843a33fb7bdfa98c6424b6dfc82fa
+  version: 3d5953674fe79ebf2d1950d0c589c8dba186ffc4
+  sha256: 8e1469a443e443b5d68a027ca09c72e403c6644ee996557a87d93082c093fad9
 deps:
   - net/zlib
   - org/boost
