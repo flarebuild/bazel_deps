@@ -94,7 +94,6 @@ CONFIG_H_CONTENT = """
 #define FOLLY_HAVE_RECVMMSG 1
 #define FOLLY_HAVE_SENDMMSG 1
 #define FOLLY_HAVE_PIPE2 1
-#define FOLLY_MUSL 1
 #else
 #define FOLLY_HAVE_BACKTRACE 1
 #endif
