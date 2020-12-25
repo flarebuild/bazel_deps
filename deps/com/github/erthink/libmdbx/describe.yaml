@@ -1,4 +1,4 @@
 rule: libmdbx
 default_args:
-  version: 0.9.1
-  sha256: 7829738d1e76dc7873e8a3bb11a05f6b999ecae6102ecd03cc9010eee2bd7c4e
+  version: 0.9.2
+  sha256: 099b31eef060bd41c35221ba2c805571d173b936075da9a97fcaf4801c8c2ecf

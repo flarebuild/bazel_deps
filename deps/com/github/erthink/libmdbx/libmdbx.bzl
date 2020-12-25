@@ -76,21 +76,23 @@ CONFIG_H_CONTENT = """
 #ifndef MDBX_BUILD_FLAGS
 #define MDBX_BUILD_FLAGS " -fexceptions -fcxx-exceptions -frtti -fno-common -ggdb -Wno-unknown-pragmas -ffunction-sections -fdata-sections -Wall -Wextra -flto=thin -Os -DNDEBUG MDBX_BUILD_SHARED_LIBRARY=0 -ffast-math -fvisibility=hidden"
 #endif
-#define MDBX_BUILD_SOURCERY 77e2da3d40f07b06cccb0660fecb01da6f807ad7c0e52b37970b05bbcf1606cc_v0_9_1_82_g21d2af9
+#define MDBX_BUILD_SOURCERY 47492323531afee427a3de6ddaeae26eed45bfd1b52d92fd121a5a13a9747dbb_v0_9_2_0_g092ab09
 """
 
 PATCH_CONTENT = """
 --- src/internals.h
 +++ src/internals.h
-@@ -13,7 +13,7 @@
+@@ -12,9 +12,7 @@
+  * <http://www.OpenLDAP.org/license.html>. */
  
  #pragma once
- #ifdef MDBX_CONFIG_H
+-#ifdef MDBX_CONFIG_H
 -#include MDBX_CONFIG_H
+-#endif
 +#include "src/config.h"
- #endif
  
- /* *INDENT-OFF* */
+ #define LIBMDBX_INTERNALS
+ #ifdef MDBX_TOOLS
 """
 
 def _libmdbx_impl(repository_ctx):
@@ -112,7 +114,7 @@ def _libmdbx_impl(repository_ctx):
         substitutions = {
             "${MDBX_VERSION_MAJOR}" : "0",
             "${MDBX_VERSION_MINOR}" : "9",
-            "${MDBX_VERSION_RELEASE}" : "1",
+            "${MDBX_VERSION_RELEASE}" : "2",
             "${MDBX_VERSION_REVISION}" : "0",
         },
     )
