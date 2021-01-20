@@ -1,0 +1,8 @@
+rule: nats_c
+default_args:
+  version: 2.3.0
+  sha256: edb5559018cb020e3c8a3e45413741803d5150b00b0474deb6b6cf7ca1be4424
+deps:
+  - com/github/jedisct1/sodium
+  - com/github/google/boringssl
+  - com/github/protobuf_c/protobuf_c
