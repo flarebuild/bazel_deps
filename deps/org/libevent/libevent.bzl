@@ -478,7 +478,7 @@ CONFIG_H_CONTENT = """
 /* Define to `int' if <sys/types.h> does not define. */
 #define EVENT__ssize_t ssize_t
 
-#endif /* \EVENT2_EVENT_CONFIG_H_INCLUDED_ */
+#endif /* EVENT2_EVENT_CONFIG_H_INCLUDED_ */
 """
 
 BUILD_CONTENT = """
