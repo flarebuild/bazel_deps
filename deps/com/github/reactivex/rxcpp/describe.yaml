@@ -1,0 +1,4 @@
+rule: rxcpp
+default_args:
+  version: 4.1.0
+  sha256: d2ee5579b81b3676c0fb7efd02aae58575f2e9148a6d8f2b469cf9c020760ccb
